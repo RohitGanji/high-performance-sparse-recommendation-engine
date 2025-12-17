@@ -1,25 +1,25 @@
-# Medicare Physician Similarity Analysis</span>
+# High-Performance Sparse Recommendation Engine
 
-Associated with [S2N Health: AI-Powered Market Intelligence](https://s2nhealth.com) 
+## Overview
+This project implements a scalable **content-based recommendation and similarity search engine** designed to handle high-dimensional, sparse datasets.
 
+Using **Latent Semantic Analysis (LSA)** and **Matrix Factorization**, the system processes over **1.1 million entities** with **6,000+ sparse features** (based on the CMS Medicare Public Use File). It demonstrates efficient memory management and dimensionality reduction techniques to perform near real-time similarity lookups on single-node infrastructure.
 
+## Key Engineering Features
+* **Sparse Data Handling:** Utilizes `scipy.sparse` (CSR format) to efficiently store and manipulate a $1.1M \times 6k$ matrix, overcoming standard RAM limitations.
+* **Dimensionality Reduction:** Implements **Truncated SVD** (Singular Value Decomposition) to project high-dimensional sparse vectors into a dense latent space (20-30 components).
+* **Vectorized Inference:** Optimization of cosine similarity calculations to achieve millisecond-latency for K-Nearest Neighbor (KNN) queries.
+* **Scalable Pipeline:** Modular design separating data ingestion, transformation, and inference, applicable to any high-cardinality interaction dataset (e.g., User-Item, Document-Term).
 
-Find the 10 nearest neighbours for the following physicians:
- - 1568588127 - Santosh Mathews
- - 1528283249 - Brett Gidney
+## Architecture
 
-<br>
-This Jupyter notebook contains various statistics concepts used to achieve the results.
-<br>
+```mermaid
+graph LR
+    A[Raw Data Ingestion] --> B[Pivot & Sparse Matrix Construction]
+    B --> C[L2 Normalization]
+    C --> D[Truncated SVD <br> Dimensionality Reduction]
+    D --> E[Vectorized Cosine Similarity]
+    E --> F[Top-K Neighbor Retrieval]
+```
 
 **Dataset:** [Medicare Physician and Other Practitioners](https://data.cms.gov/provider-summary-by-type-of-service/medicare-physician-other-practitioners/medicare-physician-other-practitioners-by-provider-and-service/data)
-
-
-
-## Introduction
-The Medicare Physician and Other Practitioners dataset is a comprehensive collection of information regarding the services and procedures provided to Medicare beneficiaries by physicians and other healthcare practitioners.
-
-## Key Features
-**Rndrng_NPI:** Physician indentified by their National Provider Identifier (NPI).<br>
-**HCPCS_Cd:** Procedures coded using the Healthcare Common Procedure Coding System (HCPCS).<br>
-**Tot_Srvcs:** Total number of partical procedure performed.<br>
